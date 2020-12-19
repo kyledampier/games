@@ -1,3 +1,6 @@
+
+var isAlive = true;
+
 class Rect {
   constructor(x=0, y=0, col=0) {
     this.height = 25;
@@ -14,6 +17,8 @@ class Rect {
       fill(0, 220, 0); // Green
     if (this.color == 2)
       fill(0, 0, 220); // Blue
+      if (this.color == 3)
+      fill(220, 0, 0); // End (Red)
     rect(this.x, this.y, this.width, this.height);
   }
 
@@ -22,13 +27,12 @@ class Rect {
     {
       if (y > this.y && y < this.y + this.height)
       {
-        if (this.color == 1)
-          console.log('green');
         if (this.color == 0)
-          console.log('grey');
+          isAlive = false;
+        if (this.color == 1)
+          console.log('safe');
         if (this.color == 2)
-          console.log('blue');
-        console.log(x/this.width, y/this.height);
+          isAlive = true;
       }
     }
   };
@@ -58,6 +62,8 @@ function setup() {
         rowOfSquares.push(new Rect(j, i, 1));
       } else if (rowStr[j] == 2) {
         rowOfSquares.push(new Rect(j, i, 2));
+      } else if (rowStr[j] == 3) {
+        rowOfSquares.push(new Rect(j, i, 3));
       }
     }
     squares.push(rowOfSquares);
@@ -87,5 +93,9 @@ function draw() {
 
   fill(255);
   textSize(32);
-  text("Level 1", 10, 390);
+  text("Level 1", 20, 390);
+  fill(0, 255, 0);
+  if (!isAlive)
+    fill(255, 0, 0);
+  ellipse(10, 380, 10, 10);
 }
